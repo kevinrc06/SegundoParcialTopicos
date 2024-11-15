@@ -85,6 +85,13 @@ class registerFragment : Fragment() {
         if(validarDatos(nombre,base64Image,prin,secun,otro)){
             val mensaje = dataBaseHelper.insertPersonaje(nombre,descripcion,prin,secun,otro,base64Image)
             mostrarMensajes(mensaje)
+            name.text.clear()
+            description.text.clear()
+            principal.isChecked = false
+            secundario.isChecked = false
+            otros.isChecked = false
+            base64Image = ""
+            imageView.visibility= View.GONE
         }
 
 
