@@ -44,25 +44,27 @@ class MainActivity : AppCompatActivity() {
         navView = findViewById(R.id.navView)
         toggle = ActionBarDrawerToggle(this,drawerLayout,R.string.open ,R.string.close)
         dataBaseHelper = DataBaseHelper(this)
-        dataBaseHelper.writableDatabase
     }
 
     private fun initListener(){
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        registerFragment().dataBaseHelper = dataBaseHelper
         navView.setNavigationItemSelectedListener {
             when (it.itemId){
                 R.id.nav_home -> supportFragmentManager.beginTransaction()
-                                .replace(R.id.fgContainer, homeFragment())
-                                .addToBackStack(null)
-                                .commit()
+                    .replace(R.id.fgContainer, homeFragment())
+                    .addToBackStack(null)
+                    .commit()
 
-                R.id.nav_register ->supportFragmentManager.beginTransaction()
-                                .replace(R.id.fgContainer, registerFragment())
-                                .addToBackStack(null)
-                                .commit()
+                R.id.nav_register -> supportFragmentManager.beginTransaction()
+                    .replace(R.id.fgContainer, registerFragment())
+                    .addToBackStack(null)
+                    .commit()
+
+                R.id.nav_consulta -> supportFragmentManager.beginTransaction()
+                    .replace(R.id.fgContainer, consultaFragment())
+                    .addToBackStack(null).commit()
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             true

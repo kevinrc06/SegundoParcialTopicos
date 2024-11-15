@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".registerFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -74,10 +74,9 @@
         <Button
             android:id="@+id/buttonSelectImage"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:text="Seleccionar Imagen"
             android:layout_gravity="center"
-            android:background="@drawable/rounded_button"
             android:paddingTop="16dp"/>
 
         <ImageView
@@ -90,15 +89,15 @@
             android:visibility="gone"
             android:paddingTop="8dp"/>
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="match_parent"
-            android:layout_marginTop="7dp"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:contentDescription="Imagen seleccionada"
-            android:visibility="gone"
-            android:paddingTop="8dp"/>
+        <Button
+            android:id="@+id/buttonGuardar"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="Guardar personaje"
+            android:layout_gravity="center"
+            android:paddingTop="16dp"/>
+
+
     </LinearLayout>
 
 </FrameLayout>

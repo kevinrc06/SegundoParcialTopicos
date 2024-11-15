@@ -15,16 +15,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import java.io.ByteArrayOutputStream
+import kotlin.time.Duration.Companion.milliseconds
 
 
 class registerFragment : Fragment() {
 
     private lateinit var buttonSelect: Button
+    private lateinit var buttonGuardar: Button
     private lateinit var imageView: ImageView
+    private lateinit var name : EditText
+    private lateinit var description : EditText
+    private lateinit var principal: CheckBox
+    private lateinit var secundario:CheckBox
+    private lateinit var otros: CheckBox
     lateinit var dataBaseHelper: DataBaseHelper
 
 
@@ -32,6 +41,7 @@ class registerFragment : Fragment() {
     private val CAMERA_REQUEST_CODE = 100
     private val GALLERY_REQUEST_CODE = 200
     private val CAMERA_PERMISSION_CODE = 300
+    private var base64Image = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,14 +56,43 @@ class registerFragment : Fragment() {
 
         buttonSelect = view.findViewById(R.id.buttonSelectImage)
         imageView = view.findViewById(R.id.imageView)
+        name = view.findViewById(R.id.editText1)
+        description = view.findViewById(R.id.editText2)
+        principal = view.findViewById(R.id.checkBox1)
+        secundario = view.findViewById(R.id.checkBox2)
+        otros = view.findViewById(R.id.checkBox3)
+        buttonGuardar = view.findViewById(R.id.buttonGuardar)
+        dataBaseHelper = DataBaseHelper(requireContext())
 
 
 
         buttonSelect.setOnClickListener {
             showImageDialog()
         }
+        buttonGuardar.setOnClickListener {
+            enviarData()
+        }
 
         return view
+    }
+
+    private fun enviarData(){
+        var nombre = name.text.toString()
+        var descripcion = description.text.toString()
+        var prin = 0
+        var secun = 0
+        var otro = 0
+        if (principal.isChecked)prin = 1
+        if (secundario.isChecked)secun = 1
+        if (otros.isChecked) otro = 1
+        val mensaje = dataBaseHelper.insertPersonaje(nombre,descripcion,prin,secun,otro,base64Image)
+        mostrarMensajes(mensaje)
+
+
+    }
+
+    private fun mostrarMensajes(msg : String){
+        Toast.makeText(context , msg, Toast.LENGTH_SHORT).show()
     }
 
     private fun showImageDialog() {
@@ -116,8 +155,7 @@ class registerFragment : Fragment() {
                     imageView.setImageBitmap(photo) // Muestra la imagen en el ImageView
                     imageView.visibility = View.VISIBLE // Hace visible el ImageView
 
-                    val base64Image = bitmapToBase64(photo)
-                    Log.d("Base64", base64Image)
+                    base64Image = bitmapToBase64(photo)
 
 
                 }
@@ -129,7 +167,7 @@ class registerFragment : Fragment() {
 
                     imageUri?.let {
                         val bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, it)
-                        val base64Image = bitmapToBase64(bitmap)
+                        base64Image = bitmapToBase64(bitmap)
                         Log.d("Base64", base64Image) // Imprime la cadena Base64 para pruebas
                     }
                 }
