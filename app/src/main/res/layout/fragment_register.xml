@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="REGISTRO PERSONAJES"
+            android:text="@string/registro"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:textSize="25sp"
@@ -29,7 +29,7 @@
             android:id="@+id/editText1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ingresa nombre del personaje"
+            android:hint="@string/hintNombre"
             android:inputType="text"
             android:layout_marginVertical="4dp"
             android:background="@drawable/bordes"/>
@@ -40,7 +40,7 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ingresa descripcion"
+            android:hint="@string/hintDescripcion"
             android:background="@drawable/bordes"
             android:layout_marginTop="2dp"
             android:inputType="text" />
@@ -48,7 +48,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Selecciona tipo de personaje (uno o varias opciones)"
+            android:text="@string/opciones"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:paddingTop="16dp"/>
@@ -57,27 +57,28 @@
             android:id="@+id/checkBox1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Principal" />
+            android:text="@string/opcion1" />
 
         <CheckBox
             android:id="@+id/checkBox2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Secundario" />
+            android:text="@string/opcion2" />
 
         <CheckBox
             android:id="@+id/checkBox3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Extra" />
+            android:text="@string/opcion3" />
 
-        <Button
+
+        <ImageView
             android:id="@+id/buttonSelectImage"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:text="Seleccionar Imagen"
             android:layout_gravity="center"
-            android:paddingTop="16dp"/>
+            android:layout_width="150dp"
+            android:src="@drawable/agregar"
+            android:layout_marginBottom="10dp"
+            android:layout_height="100dp"/>
 
         <ImageView
             android:id="@+id/imageView"
@@ -85,7 +86,6 @@
             android:layout_marginTop="7dp"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
-            android:contentDescription="Imagen seleccionada"
             android:visibility="gone"
             android:paddingTop="8dp"/>
 
@@ -93,7 +93,7 @@
             android:id="@+id/buttonGuardar"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:text="Guardar personaje"
+            android:text="@string/botonGuardar"
             android:layout_gravity="center"
             android:paddingTop="16dp"/>
 

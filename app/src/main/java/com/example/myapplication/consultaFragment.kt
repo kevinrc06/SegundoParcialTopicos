@@ -23,7 +23,6 @@ class consultaFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_consulta, container, false)
         initComponent(view)
         initListener()
-        // Inflate the layout for this fragment
         return view
     }
 
@@ -44,10 +43,9 @@ class consultaFragment : Fragment() {
 
         dataBaseHelper?.let {
 
-            val lp = it.selectAllPersonajes()
-            Log.i("Datos" , lp.toString())
+            val data = it.selectAllPersonajes()
             listaPersonaje.clear()
-            listaPersonaje.addAll(lp)
+            listaPersonaje.addAll(data)
             adapter.notifyDataSetChanged()
 
         }

@@ -26,7 +26,7 @@ import kotlin.time.Duration.Companion.milliseconds
 
 class registerFragment : Fragment() {
 
-    private lateinit var buttonSelect: Button
+    private lateinit var buttonSelect: ImageView
     private lateinit var buttonGuardar: Button
     private lateinit var imageView: ImageView
     private lateinit var name : EditText
@@ -79,15 +79,32 @@ class registerFragment : Fragment() {
     private fun enviarData(){
         var nombre = name.text.toString()
         var descripcion = description.text.toString()
-        var prin = 0
-        var secun = 0
-        var otro = 0
-        if (principal.isChecked)prin = 1
-        if (secundario.isChecked)secun = 1
-        if (otros.isChecked) otro = 1
-        val mensaje = dataBaseHelper.insertPersonaje(nombre,descripcion,prin,secun,otro,base64Image)
-        mostrarMensajes(mensaje)
+        var prin = if (principal.isChecked)1 else 0
+        var secun = if (secundario.isChecked)1 else 0
+        var otro = if (otros.isChecked) 1 else 0
+        if(validarDatos(nombre,base64Image,prin,secun,otro)){
+            val mensaje = dataBaseHelper.insertPersonaje(nombre,descripcion,prin,secun,otro,base64Image)
+            mostrarMensajes(mensaje)
+        }
 
+
+    }
+    private fun validarDatos(nombre :String, base :String , principal: Int, secundario : Int, extra :Int) : Boolean{
+        if(nombre.isEmpty()){
+            mostrarMensajes("El nombre no puede ser vacio")
+            return false
+        }
+
+        if(base.isEmpty()){
+            mostrarMensajes("Debe cargar una imagen o tomar una foto")
+            return false
+        }
+
+        if(principal == 0 && secundario == 0 && extra == 0){
+            mostrarMensajes("Debe seleccionar un tipo de personaje")
+            return false
+        }
+        return true
 
     }
 
@@ -103,30 +120,30 @@ class registerFragment : Fragment() {
             .setTitle("Selecciona una opción")
             .setItems(options) { dialog, which ->
                 when (which) {
-                    0 -> checkCameraPermission()  // Opción para tomar foto
-                    1 -> openGallery() // Opción para seleccionar de la galería
+                    0 -> checkCameraPermission()
+                    1 -> openGallery()
                 }
             }
             .show()
     }
 
-    // Abrir la cámara para capturar una imagen
+
     private fun openCamera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(intent, CAMERA_REQUEST_CODE)
     }
 
-    // Abrir la galería para seleccionar una imagen
+
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(intent, GALLERY_REQUEST_CODE)
     }
     private fun checkCameraPermission() {
-        // Verificar si el permiso de cámara ya ha sido otorgado
+
         if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             openCamera()
         } else {
-            // Solicitar el permiso de cámara si no está otorgado
+
             requestPermissions(arrayOf(android.Manifest.permission.CAMERA), CAMERA_PERMISSION_CODE)
         }
     }
@@ -138,7 +155,7 @@ class registerFragment : Fragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == CAMERA_PERMISSION_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                openCamera() // Permiso otorgado, abre la cámara
+                openCamera()
             } else {
                 Toast.makeText(requireContext(), "Permiso de cámara denegado", Toast.LENGTH_SHORT).show()
             }
@@ -150,25 +167,25 @@ class registerFragment : Fragment() {
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 CAMERA_REQUEST_CODE -> {
-                    // Obtiene la imagen de la cámara
+
                     val photo = data?.extras?.get("data") as Bitmap
-                    imageView.setImageBitmap(photo) // Muestra la imagen en el ImageView
-                    imageView.visibility = View.VISIBLE // Hace visible el ImageView
+                    imageView.setImageBitmap(photo)
+                    imageView.visibility = View.VISIBLE
 
                     base64Image = bitmapToBase64(photo)
 
 
                 }
                 GALLERY_REQUEST_CODE -> {
-                    // Obtiene la URI de la imagen seleccionada de la galería
+
                     val imageUri = data?.data
-                    imageView.setImageURI(imageUri) // Muestra la imagen en el ImageView
-                    imageView.visibility = View.VISIBLE // Hace visible el ImageView
+                    imageView.setImageURI(imageUri)
+                    imageView.visibility = View.VISIBLE
 
                     imageUri?.let {
                         val bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, it)
                         base64Image = bitmapToBase64(bitmap)
-                        Log.d("Base64", base64Image) // Imprime la cadena Base64 para pruebas
+                        Log.d("Base64", base64Image)
                     }
                 }
             }
@@ -181,22 +198,4 @@ class registerFragment : Fragment() {
         val byteArray = byteArrayOutputStream.toByteArray()
         return Base64.encodeToString(byteArray, Base64.DEFAULT)
     }
-
-/*    fun setBase64ImageToImageView(base64String: String, imageView: ImageView) {
-        try {
-            // Decodificar la cadena Base64 en un arreglo de bytes
-            val decodedString = Base64.decode(base64String, Base64.DEFAULT)
-
-            // Convertir los bytes en un Bitmap
-            val bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
-
-            // Establecer el Bitmap en el ImageView
-            imageView.setImageBitmap(bitmap)
-            imageView.visibility = View.VISIBLE
-
-        } catch (e: IllegalArgumentException) {
-            e.printStackTrace()
-            // Manejar el error en caso de que la cadena Base64 sea inválida
-        }
-    }*/
 }

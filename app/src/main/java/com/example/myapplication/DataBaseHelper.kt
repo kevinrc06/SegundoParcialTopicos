@@ -30,15 +30,15 @@ class DataBaseHelper(context: Context)  : SQLiteOpenHelper(context,"personajes.d
         val db = this.writableDatabase
 
         val contentValues = ContentValues()
-        contentValues.put("NAME", name)
-        contentValues.put("DESCRIPCION", description)
+         contentValues.put("NAME", name)
+         contentValues.put("DESCRIPCION", description)
          contentValues.put("PRINCIPAL", principal)
          contentValues.put("SECUNDARIO", secundario)
          contentValues.put("EXTRA", otros)
          contentValues.put("IMG", img)
 
         val result = db.insert("PERSONAJES", null, contentValues  )
-        return if (result == (-1).toLong() ) "Existe una falla" else "Inserción correcta"
+        return if (result == (-1).toLong() ) "Existe una falla" else "Personaje registradado exitosamente"
     }
 
 

@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
 import android.view.View
@@ -36,25 +35,19 @@ class ListaPersonajesViewHolder (view: View) : RecyclerView.ViewHolder(view) {
     }
 
     private fun generateChip(text : String  ) {
-
         val chip = Chip(cgTipo.context)
         chip.text = text
         cgTipo.addView(chip)
     }
     fun setBase64ImageToImageView(base64String: String, imageView: ImageView) {
         try {
-            // Decodificar la cadena Base64 en un arreglo de bytes
             val decodedString = Base64.decode(base64String, Base64.DEFAULT)
-
-            // Convertir los bytes en un Bitmap
             val bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
 
-            // Establecer el Bitmap en el ImageView
             imageView.setImageBitmap(bitmap)
 
         } catch (e: IllegalArgumentException) {
             e.printStackTrace()
-            // Manejar el error en caso de que la cadena Base64 sea inválida
         }
     }
 }

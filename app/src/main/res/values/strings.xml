@@ -1,8 +1,21 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Segundo Parcial</string>
     <string name="welcome">Welcome!!</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="parcial">SEGUNDO PARCIAL</string>
+    <string name="materia">TÓPICOS AVANZADOS EN INGENIERÍA</string>
+    <string name="nombre">Kevin Julian Rivera Contreras</string>
+    <string name="codigo">191934</string>
+    <string name="registro">REGISTRO PERSONAJES</string>
+    <string name="hintNombre">Ingresa nombre del personaje</string>
+    <string name="botonGuardar">Guardar personaje</string>
+    <string name="opcion3">Extra</string>
+    <string name="opcion2">Secundario</string>
+    <string name="opcion1">Principal</string>
+    <string name="opciones">Selecciona tipo de personaje (uno o varias opciones)</string>
+    <string name="hintDescripcion">Ingresa descripcion)</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
